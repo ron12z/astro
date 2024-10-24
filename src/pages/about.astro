@@ -1,12 +1,13 @@
 ---
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 import "../styles/global.css";
 
 const pageTitle = "About Me";
 
 const identity = {
-	firstName: "Aaron",
+	firstName: "Ron",
 	country: "Philippines",
 	occupation: "Fraud Analyst",
 	hobbies: ["Coding", "Valorant", "Eating"],
@@ -18,74 +19,53 @@ const happy = true;
 const finished = false;
 const goal = 3;
 
-const skillColor = "navy";
-const otherColor = "purple";
 const fontWeight = "bold";
 const textCase = "uppercase";
+const skillColor = "navy";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{pageTitle}</title>
+<BaseLayout pageTitle={pageTitle}>
+	<h2>It's me and my new Astro site!</h2>
+	<p>
+		I am working through Astro's introductory tutorial. This is the second page
+		on my website, and it's the first one I built myself!
+	</p>
 
-		<style define:vars={{ skillColor, otherColor, fontWeight, textCase }}>
-			h1 {
-				color: var(--otherColor);
-				font-size: 4rem;
-			}
+	<p>
+		This site will update as I complete more of the tutorial, so keep checking
+		back and see how my journey is going!
+	</p>
 
-			.skill {
-				color: var(--skillColor);
-				font-weight: var(--fontWeight);
-				text-transform: var(--textCase);
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
+	<p>Here are a few facts about me:</p>
+	<ul>
+		<li>My name is {identity.firstName}.</li>
+		<li>
+			I live in {identity.country} and I work as a {identity.occupation}.
+		</li>
+		{
+			identity.hobbies.length >= 2 && (
+				<li>
+					Two of my hobbies are: {identity.hobbies[0]} and {identity.hobbies[1]}
+				</li>
+			)
+		}
+	</ul>
+	<p>My skills are:</p>
+	<ul>
+		{skills.map((skill) => <li class="skill">{skill}</li>)}
+	</ul>
 
-		<h1>{pageTitle}</h1>
-		<h2>It's me and my new Astro site!</h2>
-		<p>
-			I am working through Astro's introductory tutorial. This is the second
-			page on my website, and it's the first one I built myself!
-		</p>
+	{happy && <p>I am happy to be learning Astro!</p>}
 
-		<p>
-			This site will update as I complete more of the tutorial, so keep checking
-			back and see how my journey is going!
-		</p>
+	{finished && <p>I finished this tutorial!</p>}
 
-		<p>Here are a few facts about me:</p>
-		<ul>
-			<li>My name is {identity.firstName}.</li>
-			<li>
-				I live in {identity.country} and I work as a {identity.occupation}.
-			</li>
-			{
-				identity.hobbies.length >= 2 && (
-					<li>
-						Two of my hobbies are: {identity.hobbies[0]} and{" "}
-						{identity.hobbies[1]}
-					</li>
-				)
-			}
-		</ul>
-		<p>My skills are:</p>
-		<ul>
-			{skills.map((skill) => <li class="skill">{skill}</li>)}
-		</ul>
+	{goal && <p>My goal is to finish in {goal} days.</p>}
 
-		{happy && <p>I am happy to be learning Astro!</p>}
-
-		{finished && <p>I finished this tutorial!</p>}
-
-		{goal && <p>My goal is to finish in {goal} days.</p>}
-
-		<Footer />
-	</body>
-</html>
+	<style define:vars={{ skillColor, fontWeight, textCase }}>
+		.skill {
+			color: var(--skillColor);
+			font-weight: var(--fontWeight);
+			text-transform: var(--textCase);
+		}
+	</style>
+</BaseLayout>
